@@ -6,7 +6,8 @@ import { InputProps } from '@/app/lib/types'
  */
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     ({ label, error, required = false, id, className = '', ...props }, ref) => {
-        const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`
+        const generatedId = React.useId()
+        const inputId = id || `input-${generatedId}`
         const errorId = error ? `${inputId}-error` : undefined
 
         return (

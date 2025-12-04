@@ -1,5 +1,3 @@
-'use client'
-
 import { z } from 'zod'
 import { ExpenseCategory } from './types'
 import { MAX_DESCRIPTION_LENGTH, MAX_AMOUNT, MIN_AMOUNT } from './constants'

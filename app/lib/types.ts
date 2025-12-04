@@ -1,5 +1,3 @@
-'use client'
-
 // Expense category type
 export type ExpenseCategory = 'Food' | 'Transport' | 'Entertainment' | 'Shopping' | 'Bills' | 'Health' | 'Other'
 

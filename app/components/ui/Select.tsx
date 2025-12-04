@@ -6,7 +6,8 @@ import { SelectProps } from '@/app/lib/types'
  */
 export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
     ({ label, options, error, required = false, id, className = '', ...props }, ref) => {
-        const selectId = id || `select-${Math.random().toString(36).substr(2, 9)}`
+        const generatedId = React.useId()
+        const selectId = id || `select-${generatedId}`
         const errorId = error ? `${selectId}-error` : undefined
 
         return (

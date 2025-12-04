@@ -1,5 +1,3 @@
-'use client'
-
 import { ExpenseCategory, CategoryConfig } from './types'
 
 // Storage configuration
