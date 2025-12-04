@@ -69,9 +69,9 @@ export default function Home() {
                 selected={selectedCategory}
                 onSelect={handleCategorySelect}
               />
-              
+
               {/* Filter result feedback */}
-              <div 
+              <div
                 className="mt-4 text-sm text-gray-600"
                 aria-live="polite"
                 aria-atomic="true"
