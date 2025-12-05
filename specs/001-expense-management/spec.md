@@ -91,7 +91,7 @@ Users need to remove incorrect or duplicate expenses to maintain data accuracy a
 
 ### Edge Cases
 
-- What happens when a user enters extremely large amounts (e.g., over $1,000,000)?
+- What happens when a user enters extremely large amounts (e.g., over ₹10,000,000)?
 - How does the system handle expenses with the same amount, category, and date?
 - What happens if a user loses connection while submitting an expense?
 - How does the system handle special characters in descriptions (emoji, symbols, multiple languages)?
@@ -111,7 +111,7 @@ Users need to remove incorrect or duplicate expenses to maintain data accuracy a
 - **FR-005**: System MUST persist expense data locally so it survives page refreshes
 - **FR-006**: System MUST validate expense amounts as positive numbers with up to 2 decimal places
 - **FR-007**: System MUST provide predefined expense categories (Food, Transport, Entertainment, Shopping, Bills, Health, Other)
-- **FR-008**: System MUST format currency amounts consistently throughout the application (e.g., $0.00 format)
+- **FR-008**: System MUST format currency amounts consistently throughout the application (e.g., ₹0.00 format)
 - **FR-009**: System MUST sort expenses by date with most recent first by default
 - **FR-010**: System MUST show helpful empty states when no expenses exist or no results match filters
 - **FR-011**: System MUST provide toast notifications (3-5 second duration) for successful add/delete actions and validation errors
@@ -164,7 +164,7 @@ Users need to remove incorrect or duplicate expenses to maintain data accuracy a
 
 - Users will access the application primarily on desktop and mobile browsers
 - Expense data will be stored locally (localStorage) - no backend/server required for MVP
-- Currency will default to USD with $ symbol (internationalization can be added later)
+- Currency will default to INR with ₹ symbol (internationalization can be added later)
 - Users manage personal expenses only (no multi-user or sharing features)
 - Categories are predefined and fixed (users cannot create custom categories in MVP)
 - No data export/import functionality required in initial version

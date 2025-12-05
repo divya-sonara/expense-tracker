@@ -6,8 +6,8 @@ import { MAX_DESCRIPTION_LENGTH, MAX_AMOUNT, MIN_AMOUNT } from './constants'
 export const AddExpenseSchema = z.object({
     amount: z
         .number()
-        .min(MIN_AMOUNT, `Amount must be at least $${MIN_AMOUNT}`)
-        .max(MAX_AMOUNT, `Amount cannot exceed $${MAX_AMOUNT}`)
+        .min(MIN_AMOUNT, `Amount must be at least ₹${MIN_AMOUNT}`)
+        .max(MAX_AMOUNT, `Amount cannot exceed ₹${MAX_AMOUNT}`)
         .refine(
             amount => {
                 const decimals = amount.toString().split('.')[1]

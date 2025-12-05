@@ -229,7 +229,7 @@ Features:
 - Table display with columns: Amount, Description, Category, Date, Actions
 - Semantic HTML (proper table structure)
 - Date sorting (most recent first)
-- Currency formatting ($0.00)
+- Currency formatting (₹0.00)
 - Empty state message
 - Scrollable table with sticky header
 - Loading states during fetch
