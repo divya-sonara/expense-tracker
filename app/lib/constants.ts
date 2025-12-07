@@ -2,8 +2,13 @@ import { ExpenseCategory, CategoryConfig } from './types'
 
 // Storage configuration
 export const STORAGE_KEY = 'expenses-v1'
+export const BUDGET_STORAGE_KEY = 'budgets-v1'
 export const STORAGE_VERSION = 1
 export const TOAST_DURATION_MS = 3000
+
+// Budget thresholds
+export const BUDGET_WARNING_THRESHOLD = 0.8 // 80% of budget
+export const BUDGET_DANGER_THRESHOLD = 1.0 // 100% of budget
 
 // Form constraints
 export const MAX_DESCRIPTION_LENGTH = 200

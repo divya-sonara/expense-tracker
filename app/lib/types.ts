@@ -18,6 +18,40 @@ export interface ExpenseStorage {
     lastUpdated: string // ISO timestamp
 }
 
+// Budget types
+export interface Budget {
+    id: string
+    category: ExpenseCategory | 'overall'
+    limit: number
+    period: 'monthly' | 'weekly' | 'daily'
+    createdAt: string
+}
+
+export interface BudgetStorage {
+    version: number
+    budgets: Budget[]
+    lastUpdated: string
+}
+
+export interface BudgetStatus {
+    budget: Budget
+    spent: number
+    remaining: number
+    percentage: number
+    isExceeded: boolean
+    isNearLimit: boolean
+}
+
+export interface UseBudgetReturn {
+    budgets: Budget[]
+    addBudget: (category: ExpenseCategory | 'overall', limit: number, period: 'monthly' | 'weekly' | 'daily') => Promise<Budget | null>
+    deleteBudget: (id: string) => Promise<boolean>
+    getBudgetStatus: (category: ExpenseCategory | 'overall', expenses: Expense[]) => BudgetStatus | null
+    getAllBudgetStatuses: (expenses: Expense[]) => BudgetStatus[]
+    isLoaded: boolean
+    error?: string
+}
+
 // Category configuration
 export interface CategoryConfig {
     name: ExpenseCategory
