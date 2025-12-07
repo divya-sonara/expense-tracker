@@ -8,6 +8,7 @@ A fully accessible, modern expense tracking application built with Next.js 16, R
 ✅ **View List** - Display all expenses in a responsive, sortable table  
 ✅ **Filter by Category** - Quick filter with result count and announcements  
 ✅ **Delete Safely** - Confirmation dialog prevents accidental deletion  
+✅ **Budget Alerts** - Set budget limits and get alerts when approaching or exceeding limits  
 ✅ **Offline-First** - All data stored in browser localStorage (no server required)  
 ✅ **Fully Accessible** - WCAG 2.1 Level AA compliant (keyboard, screen readers, focus management)  
 
@@ -19,6 +20,7 @@ A fully accessible, modern expense tracking application built with Next.js 16, R
 | P2 | View Expenses | ✅ Complete |
 | P3 | Filter by Category | ✅ Complete |
 | P4 | Delete Expense | ✅ Complete |
+| P5 | Budget Alerts | ✅ Complete |
 
 ## Quick Start
 
@@ -93,6 +95,18 @@ Confirmation dialog preventing accidental expense deletion.
 />
 ```
 
+### `BudgetForm`
+Form for setting budget limits per category or overall.
+```tsx
+<BudgetForm onSubmit={handleBudgetSubmit} />
+```
+
+### `BudgetAlert`
+Alert component showing budget warnings and exceeded limits.
+```tsx
+<BudgetAlert statuses={budgetStatuses} />
+```
+
 ## Custom Hooks
 
 ### `useExpenses()`
@@ -119,6 +133,25 @@ addToast('Expense added!', 'success')
 Generic localStorage hook with encryption.
 ```tsx
 const { value, setValue, isLoaded } = useLocalStorage('key', [])
+```
+
+### `useBudget()`
+Hook for budget management and tracking.
+```tsx
+const {
+  budgets,
+  addBudget,
+  deleteBudget,
+  getBudgetStatus,
+  getAllBudgetStatuses,
+  isLoaded
+} = useBudget()
+
+// Set a budget
+await addBudget('Food', 500, 'monthly')
+
+// Get budget status for a category
+const status = getBudgetStatus('Food', expenses)
 ```
 
 ## Server Actions
@@ -225,6 +258,37 @@ No data is sent to external servers.
 }
 ```
 
+**Budget Storage Format**:
+```json
+{
+  "version": 1,
+  "budgets": [
+    {
+      "id": "uuid",
+      "category": "Food",
+      "limit": 500,
+      "period": "monthly",
+      "createdAt": "2024-01-15T12:00:00Z"
+    }
+  ],
+  "lastUpdated": "2024-01-15T12:00:00Z"
+}
+```
+
+## Budget Alert System
+
+The budget alert system helps you track spending and stay within limits:
+
+- **Set Budgets**: Define spending limits per category or overall
+- **Budget Periods**: Choose from daily, weekly, or monthly tracking
+- **Visual Alerts**: Get warnings at 80% usage (yellow) and alerts when exceeded (red)
+- **Real-time Updates**: Budget status updates automatically as you add expenses
+- **Progress Tracking**: Visual progress bars show spending relative to limits
+
+Budget alerts appear prominently at the top of the page when:
+- You've spent 80% or more of your budget (warning)
+- You've exceeded your budget limit (alert)
+
 ## Development
 
 ### Setup development environment
@@ -259,7 +323,7 @@ npx tsc --noEmit
 
 - [ ] Export expenses to CSV/PDF
 - [ ] Recurring expenses
-- [ ] Budget limits and alerts
+- [x] Budget limits and alerts
 - [ ] Monthly/yearly summaries
 - [ ] Multi-device sync (with backend)
 - [ ] Dark mode

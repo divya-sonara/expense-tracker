@@ -1,14 +1,16 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { ExpenseForm, ExpenseList, CategoryFilter } from '@/app/components/features'
+import { ExpenseForm, ExpenseList, CategoryFilter, BudgetForm, BudgetAlert } from '@/app/components/features'
 import { useExpenses } from '@/app/hooks/useExpenses'
+import { useBudget } from '@/app/hooks/useBudget'
 import { useToast } from '@/app/hooks/useToast'
 import { Expense, ExpenseCategory } from '@/app/lib/types'
 import { ToastContainer } from '@/app/components/ui/ToastContainer'
 
 export default function Home() {
   const { expenses, addExpense, deleteExpense, filterByCategory, isLoaded, error } = useExpenses()
+  const { addBudget, getAllBudgetStatuses, isLoaded: budgetsLoaded } = useBudget()
   const { toasts, addToast, removeToast } = useToast()
   const [selectedCategory, setSelectedCategory] = useState<ExpenseCategory | null>(null)
 
@@ -16,6 +18,12 @@ export default function Home() {
   const filteredExpenses = useMemo(() => {
     return filterByCategory(selectedCategory)
   }, [selectedCategory, filterByCategory])
+
+  // Get budget statuses
+  const budgetStatuses = useMemo(() => {
+    if (!budgetsLoaded) return []
+    return getAllBudgetStatuses(expenses)
+  }, [budgetsLoaded, getAllBudgetStatuses, expenses])
 
   const handleExpenseAdded = (expense: Expense) => {
     // The server action already created the expense object with ID
@@ -37,6 +45,15 @@ export default function Home() {
     setSelectedCategory(category)
   }
 
+  const handleBudgetSubmit = async (category: ExpenseCategory | 'overall', limit: number, period: 'monthly' | 'weekly' | 'daily') => {
+    const result = await addBudget(category, limit, period)
+    if (result) {
+      addToast(`Budget set for ${category === 'overall' ? 'overall spending' : category}`, 'success')
+    } else {
+      addToast('Failed to set budget', 'error')
+    }
+  }
+
   return (
     <main className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -55,10 +72,18 @@ export default function Home() {
           </div>
         )}
 
+        {/* Budget Alerts */}
+        {budgetStatuses.length > 0 && (
+          <div className="mb-8">
+            <BudgetAlert statuses={budgetStatuses} />
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
           {/* Expense Form - Left column on desktop */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 space-y-6">
             <ExpenseForm onSuccess={handleExpenseAdded} />
+            <BudgetForm onSubmit={handleBudgetSubmit} />
           </div>
 
           {/* Filter and Expense List - Right columns on desktop */}
