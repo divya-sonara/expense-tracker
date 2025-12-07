@@ -10,7 +10,7 @@ import { ToastContainer } from '@/app/components/ui/ToastContainer'
 
 export default function Home() {
   const { expenses, addExpense, deleteExpense, filterByCategory, isLoaded, error } = useExpenses()
-  const { budgets, addBudget, getAllBudgetStatuses, isLoaded: budgetsLoaded } = useBudget()
+  const { addBudget, getAllBudgetStatuses, isLoaded: budgetsLoaded } = useBudget()
   const { toasts, addToast, removeToast } = useToast()
   const [selectedCategory, setSelectedCategory] = useState<ExpenseCategory | null>(null)
 

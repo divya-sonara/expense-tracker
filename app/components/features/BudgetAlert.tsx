@@ -94,9 +94,9 @@ export function BudgetAlert({ statuses }: BudgetAlertProps) {
                                     <div className="w-full bg-white rounded-full h-2 overflow-hidden">
                                         <div 
                                             className={`h-full transition-all ${isExceeded ? 'bg-red-500' : 'bg-yellow-500'}`}
-                                            style={{ width: `${Math.min(percentage, 100)}%` }}
+                                            style={{ width: `${Math.max(0, Math.min(percentage, 100))}%` }}
                                             role="progressbar"
-                                            aria-valuenow={Math.min(percentage, 100)}
+                                            aria-valuenow={Math.max(0, Math.min(percentage, 100))}
                                             aria-valuemin={0}
                                             aria-valuemax={100}
                                             aria-label={`Budget usage: ${percentage.toFixed(0)}%`}

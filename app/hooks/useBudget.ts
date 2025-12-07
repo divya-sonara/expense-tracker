@@ -4,7 +4,7 @@ import { useCallback } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { Budget, BudgetStorage, BudgetStatus, UseBudgetReturn, Expense, ExpenseCategory } from '@/app/lib/types'
 import { useLocalStorage } from './useLocalStorage'
-import { BUDGET_STORAGE_KEY, STORAGE_VERSION, BUDGET_WARNING_THRESHOLD, BUDGET_DANGER_THRESHOLD } from '@/app/lib/constants'
+import { BUDGET_STORAGE_KEY, STORAGE_VERSION, BUDGET_WARNING_THRESHOLD } from '@/app/lib/constants'
 
 /**
  * Custom hook for managing budgets with localStorage persistence
@@ -27,6 +27,12 @@ export function useBudget(): UseBudgetReturn {
     const addBudget = useCallback(
         async (category: ExpenseCategory | 'overall', limit: number, period: 'monthly' | 'weekly' | 'daily'): Promise<Budget | null> => {
             try {
+                // Validate limit is positive
+                if (limit <= 0) {
+                    console.error('Budget limit must be greater than 0')
+                    return null
+                }
+
                 // Check if budget already exists for this category
                 const existingBudget = storage.budgets.find(b => b.category === category && b.period === period)
                 if (existingBudget) {
@@ -129,7 +135,7 @@ export function useBudget(): UseBudgetReturn {
 
             const spent = calculateSpent(category, expenses, budget.period)
             const remaining = budget.limit - spent
-            const percentage = (spent / budget.limit) * 100
+            const percentage = budget.limit > 0 ? (spent / budget.limit) * 100 : 0
 
             return {
                 budget,
@@ -149,7 +155,7 @@ export function useBudget(): UseBudgetReturn {
             return storage.budgets.map(budget => {
                 const spent = calculateSpent(budget.category, expenses, budget.period)
                 const remaining = budget.limit - spent
-                const percentage = (spent / budget.limit) * 100
+                const percentage = budget.limit > 0 ? (spent / budget.limit) * 100 : 0
 
                 return {
                     budget,

@@ -36,6 +36,7 @@ export function BudgetForm({ onSubmit, isLoading = false }: BudgetFormProps) {
             setLimit('')
             setError('')
         } catch (err) {
+            // Handle error silently
             setError('Failed to set budget. Please try again.')
         }
     }
