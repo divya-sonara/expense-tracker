@@ -64,9 +64,9 @@ describe('ExpenseList', () => {
         expect(screen.getByText(/actions/i)).toBeInTheDocument()
 
         // Check expense data
-        expect(screen.getByText('$50.00')).toBeInTheDocument()
-        expect(screen.getByText('$25.50')).toBeInTheDocument()
-        expect(screen.getByText('$100.00')).toBeInTheDocument()
+        expect(screen.getByText('₹50.00')).toBeInTheDocument()
+        expect(screen.getByText('₹25.50')).toBeInTheDocument()
+        expect(screen.getByText('₹100.00')).toBeInTheDocument()
 
         expect(screen.getByText('Food')).toBeInTheDocument()
         expect(screen.getByText('Transport')).toBeInTheDocument()
@@ -80,7 +80,7 @@ describe('ExpenseList', () => {
         // Skip header row (index 0)
         // First expense should be Jan 16 (newest)
         expect(rows[1]).toHaveTextContent('Jan 16')
-        expect(rows[1]).toHaveTextContent('$100.00')
+        expect(rows[1]).toHaveTextContent('₹100.00')
     })
 
     it('toggles sort direction when clicking same column header', async () => {
@@ -100,7 +100,7 @@ describe('ExpenseList', () => {
         rows = screen.getAllByRole('row')
         // First data row should now be Jan 14 (oldest, ascending)
         expect(rows[1]).toHaveTextContent('Jan 14')
-        expect(rows[1]).toHaveTextContent('$25.50')
+        expect(rows[1]).toHaveTextContent('₹25.50')
     })
 
     it('changes sort field when clicking different column header', async () => {
@@ -114,8 +114,8 @@ describe('ExpenseList', () => {
 
         await waitFor(() => {
             const rows = screen.getAllByRole('row')
-            // First expense should be $100.00 (highest amount)
-            expect(rows[1]).toHaveTextContent('$100.00')
+            // First expense should be ₹100.00 (highest amount)
+            expect(rows[1]).toHaveTextContent('₹100.00')
         })
     })
 
@@ -225,7 +225,7 @@ describe('ExpenseList', () => {
         const parentText = statusContainer.textContent || ''
         expect(parentText).toContain('3')
         expect(parentText).toContain('Total')
-        expect(parentText).toContain('$175.50')
+        expect(parentText).toContain('₹175.50')
     })
 
     it('truncates long descriptions', () => {

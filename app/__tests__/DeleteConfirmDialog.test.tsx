@@ -60,7 +60,7 @@ describe('DeleteConfirmDialog', () => {
                 />
             )
 
-            expect(screen.getByText('$42.50')).toBeInTheDocument()
+            expect(screen.getByText('₹42.50')).toBeInTheDocument()
             expect(screen.getByText('Food')).toBeInTheDocument()
             expect(screen.getByText('Jan 15, 2024')).toBeInTheDocument()
             expect(screen.getByText('Lunch at restaurant')).toBeInTheDocument()
